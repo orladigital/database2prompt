@@ -11,7 +11,7 @@ def main():
     content = f"""# Metadata information about database
         all tables: {tables}
     """
-    output_file = "output.md"
+    output_file = "database-summary.md"
 
     generate_markdown(content, output_file)
     print(f"Arquivo Markdown gerado: {output_file}")
