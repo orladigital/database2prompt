@@ -1,0 +1,19 @@
+[project]
+name = "database2prompt"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "jose.neto",email = "jose.neto-ext@anbima.com.br"}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "markdown (>=3.7,<4.0)",
+    "sqlalchemy (>=2.0.37,<3.0.0)",
+    "psycopg2 (>=2.9.10,<3.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
