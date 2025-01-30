@@ -1,7 +1,8 @@
-import markdown
+def generate_markdown(tables: list[str]):
+    """Generates a markdown file given a string value."""
 
-def generate_markdown(content: str, output_file: str):
-    """Gera um arquivo Markdown a partir de uma string."""
-    md_content = markdown.markdown(content)
-    with open(output_file, "w") as file:
-        file.write(md_content)
+    md_content = "# Table of contents\n"
+    for table in tables:
+        md_content += f"- {table}\n"
+        
+    return md_content
