@@ -3,18 +3,18 @@ from database2prompt.markdown.generator import generate_markdown
 
 def main():
     db = next(connection.get_db())
-    print("Conectado ao banco de dados!")
+    print("Connected to the database!")
 
-    tables = connection.list_tables();
+    tables = connection.list_tables()
     print("tables: ", tables)
 
-    content = f"""# Metadata information about database
-        all tables: {tables}
-    """
     output_file = "database-summary.md"
 
-    generate_markdown(content, output_file)
-    print(f"Arquivo Markdown gerado: {output_file}")
+    generated_markdown = generate_markdown(tables)
+    with open(output_file, "w") as file:
+        file.write(generated_markdown)
+        
+    print(f"Markdown file generated: {output_file}")
 
 if __name__ == "__main__":
     main()
