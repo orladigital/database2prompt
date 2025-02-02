@@ -1,12 +1,18 @@
-from database2prompt.database import connection
+from database2prompt.database.core.database_factory import DatabaseFactory
 from database2prompt.markdown.generator import generate_markdown
 
 def main():
-    db = next(connection.get_db())
+    database = "pgsql"
+    strategy = DatabaseFactory.run(database)
+
+    db_strategy = next(strategy.connection())
     print("Connected to the database!")
 
-    tables = connection.list_tables()
+    tables = strategy.list_tables()
     print("tables: ", tables)
+
+    estimated_rows = strategy.estimated_rows()
+    print("Estimated_rows:", estimated_rows)
 
     output_file = "database-summary.md"
 
