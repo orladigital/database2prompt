@@ -12,5 +12,5 @@ class DatabaseStrategy(ABC):
         pass
 
     @abstractmethod
-    def estimated_rows(self):
+    def estimated_rows(self, tables_name):
         pass

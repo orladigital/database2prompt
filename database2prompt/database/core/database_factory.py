@@ -1,5 +1,5 @@
 from database2prompt.database.core.database_strategy import DatabaseStrategy
-from database2prompt.database.pgsql.table_metadata_pg import PostgreSQLStrategy
+from database2prompt.database.pgsql.postgresql_strategy import PostgreSQLStrategy
 
 class DatabaseFactory:
     strategies = {
