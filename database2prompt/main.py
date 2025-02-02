@@ -11,7 +11,7 @@ def main():
     tables = strategy.list_tables()
     print("tables: ", tables)
 
-    estimated_rows = strategy.estimated_rows()
+    estimated_rows = strategy.estimated_rows(tables)
     print("Estimated_rows:", estimated_rows)
 
     output_file = "database-summary.md"
