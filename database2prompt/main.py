@@ -16,7 +16,7 @@ def main():
 
     output_file = "database-summary.md"
 
-    generated_markdown = generate_markdown(tables)
+    generated_markdown = generate_markdown(tables, estimated_rows)
     with open(output_file, "w") as file:
         file.write(generated_markdown)
         
