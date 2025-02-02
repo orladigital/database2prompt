@@ -1,6 +1,9 @@
+from typing import Dict
+
 from sqlalchemy import create_engine, inspect, text
 from database2prompt.database.core.database_strategy import DatabaseStrategy
 from sqlalchemy.orm import sessionmaker
+
 
 class PostgreSQLStrategy(DatabaseStrategy):
     DATABASE_URL = "postgresql+psycopg2://admin:admin@localhost:5432/database_agent"
@@ -20,7 +23,7 @@ class PostgreSQLStrategy(DatabaseStrategy):
         tables = inspector.get_table_names()
         return tables
 
-    def estimated_rows(self, tables_name):
+    def estimated_rows(self, tables_name) -> Dict[str, int]:
         query = """
             SELECT relname AS table_name, reltuples::bigint AS estimated_rows
             FROM pg_class
