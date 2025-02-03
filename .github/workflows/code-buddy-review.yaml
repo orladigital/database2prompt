@@ -1,0 +1,21 @@
+name: CodeBuddy CodeReview
+on:
+  pull_request:
+    types: [ opened, synchronize ]
+
+jobs:
+  ai_agent_code_review:
+    runs-on: ubuntu-latest
+    name: Automatic code review
+    steps:
+      - name: CodeBuddy
+        id: code_review
+        uses: code-buddy-agent/code-buddy@v1.0.0
+        with:
+          owner: "${{ github.repository_owner }}"
+          repository: database2prompt
+          pull_request_number: "${{ github.event.pull_request.number }}"
+          github_token: "${{ secrets.GH_TOKEN }}"
+          code_buddy_key: "${{ secrets.CODE_BUDDY_KEY }}"
+          stack: "python"
+          total_comments: 4
