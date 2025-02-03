@@ -18,4 +18,4 @@ jobs:
           github_token: "${{ secrets.GH_TOKEN }}"
           code_buddy_key: "${{ secrets.CODE_BUDDY_KEY }}"
           stack: "python"
-          total_comments: 4
+          total_comments: 1
