@@ -1,19 +1,26 @@
-from database2prompt.database import connection
+from database2prompt.database.core.database_factory import DatabaseFactory
 from database2prompt.markdown.generator import generate_markdown
 
 def main():
-    next(connection.get_db())
+    database = "pgsql"
+    strategy = DatabaseFactory.run(database)
+
+    next(strategy.connection())
     print("Connected to the database!")
 
-    tables = connection.list_tables()
+    tables = strategy.list_tables()
     print("tables: ", tables)
+    
+    estimated_rows = strategy.estimated_rows(tables)
+    print("Estimated_rows:", estimated_rows)
 
-    generated_markdown = generate_markdown(tables)
+    generated_markdown = generate_markdown(tables, estimated_rows)
     output_file = "dist/output.md"
     with open(output_file, "w") as file:
         file.write(generated_markdown)
-        
+
     print(f"Markdown file generated: {output_file}")
+
 
 if __name__ == "__main__":
     main()
