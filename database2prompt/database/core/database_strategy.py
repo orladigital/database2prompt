@@ -14,3 +14,6 @@ class DatabaseStrategy(ABC):
     @abstractmethod
     def estimated_rows(self, tables_name):
         pass
+
+    def list_views(self):
+        pass
