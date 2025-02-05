@@ -1,4 +1,4 @@
-from database2prompt.markdown.generator import generate_markdown
+from database2prompt.markdown.markdown_generator import generate_markdown
 
 def test_should_generate_database_table_of_contents():
     tables = ["table_a", "table_b", "table_c"]

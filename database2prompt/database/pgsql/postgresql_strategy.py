@@ -1,6 +1,6 @@
 from typing import Dict
 
-from sqlalchemy import create_engine, inspect, text
+from sqlalchemy import create_engine, inspect, text, MetaData, Table
 from database2prompt.database.core.database_strategy import DatabaseStrategy
 from sqlalchemy.orm import sessionmaker
 
@@ -17,10 +17,15 @@ class PostgreSQLStrategy(DatabaseStrategy):
         finally:
             db.close()
 
-    def list_tables(self):
+    def schemas(self):
+        """Get all schemas of database"""
+        inspector = inspect(self.engine)
+        return filter(lambda s: s not in ["pg_catalog", "information_schema"], inspector.get_schema_names())
+
+    def list_tables(self, schema_name):
         """Return all table names of database"""
         inspector = inspect(self.engine)
-        tables = inspector.get_table_names()
+        tables = inspector.get_table_names(schema_name)
         return tables
 
     def estimated_rows(self, tables_name) -> Dict[str, int]:
@@ -33,3 +38,8 @@ class PostgreSQLStrategy(DatabaseStrategy):
         with self.engine.connect() as connection:
             result = connection.execute(text(query), {"table_names": tables_name})
             return {row._mapping["table_name"]: row._mapping["estimated_rows"] for row in result}
+        
+    def table_object(self, table, schema):
+        metadata = MetaData()
+        return Table(table, metadata, schema=schema, autoload_with=self.engine)
+        
