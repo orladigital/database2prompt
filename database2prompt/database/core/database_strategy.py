@@ -22,3 +22,6 @@ class DatabaseStrategy(ABC):
     @abstractmethod
     def table_object(self, table: str, schema: str) -> Table:
         pass
+
+    def list_views(self):
+        pass
