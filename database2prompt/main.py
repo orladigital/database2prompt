@@ -15,9 +15,12 @@ def main():
     estimated_rows = strategy.estimated_rows(tables)
     print("Estimated_rows:", estimated_rows)
 
+    views = strategy.list_views()
+    print("views:", views)
+
     output_file = "database-summary.md"
 
-    generated_markdown = generate_markdown(tables, estimated_rows)
+    generated_markdown = generate_markdown(tables, estimated_rows, views)
     with open(output_file, "w") as file:
         file.write(generated_markdown)
 
