@@ -58,6 +58,6 @@ class PostgreSQLStrategy(DatabaseStrategy):
             result = connection.execute(text(query))
             for row in result:
                 print(f"Schema: {row.schemaname}, View: {row.viewname}\nDefinição:\n{row.definition}\n")
-                views.append({"name": row.viewname, "ddl": row.definition})
+                views.append({"schema": row.schemaname, "name": row.viewname, "ddl": row.definition})
 
         return views
