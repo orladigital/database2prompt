@@ -17,6 +17,7 @@ def test_processed_info():
 
     mock_database_strategy.list_schemas.return_value = ["op"]
     mock_database_strategy.list_tables.return_value = ["stock", "employee"]
+    mock_database_strategy.list_views.return_value = []
     mock_database_strategy.estimated_rows.return_value = {}
     mock_database_strategy.table_object.return_value = mock_table
 
@@ -42,6 +43,7 @@ def test_processed_estimated_rows():
 
     mock_database_strategy.list_schemas.return_value = ["public"]
     mock_database_strategy.list_tables.return_value = ["stock", "employee", "user"]
+    mock_database_strategy.list_views.return_value = []
     mock_database_strategy.estimated_rows.return_value = { "user": 1, "stock": 203, "employee": 54 }
     mock_database_strategy.table_object.return_value = mock_table
 
@@ -84,6 +86,7 @@ def test_processed_fields_types():
 
     mock_database_strategy.list_schemas.return_value = ["public"]
     mock_database_strategy.list_tables.return_value = ["user"]
+    mock_database_strategy.list_views.return_value = []
     mock_database_strategy.estimated_rows.return_value = { "user": 1 }
     mock_database_strategy.table_object.return_value = mock_table
     
@@ -175,6 +178,7 @@ def test_processed_fields_default_clause():
 
     mock_database_strategy.list_schemas.return_value = ["public"]
     mock_database_strategy.list_tables.return_value = ["user"]
+    mock_database_strategy.list_views.return_value = []
     mock_database_strategy.estimated_rows.return_value = { "user": 1 }
     mock_database_strategy.table_object.return_value = mock_table
     
@@ -206,6 +210,7 @@ def test_processed_fields_computed_value():
 
     mock_database_strategy.list_schemas.return_value = ["public"]
     mock_database_strategy.list_tables.return_value = ["user"]
+    mock_database_strategy.list_views.return_value = []
     mock_database_strategy.estimated_rows.return_value = { "user": 1 }
     mock_database_strategy.table_object.return_value = mock_table
     
@@ -248,6 +253,7 @@ def test_processed_fields_generated_identity():
 
     mock_database_strategy.list_schemas.return_value = ["public"]
     mock_database_strategy.list_tables.return_value = ["user"]
+    mock_database_strategy.list_views.return_value = []
     mock_database_strategy.estimated_rows.return_value = { "user": 1 }
     mock_database_strategy.table_object.return_value = mock_table
     
@@ -296,6 +302,7 @@ def test_processed_fields_nullable():
 
     mock_database_strategy.list_schemas.return_value = ["public"]
     mock_database_strategy.list_tables.return_value = ["user"]
+    mock_database_strategy.list_views.return_value = []
     mock_database_strategy.estimated_rows.return_value = { "user": 1 }
     mock_database_strategy.table_object.return_value = mock_table
     
