@@ -11,7 +11,10 @@ class DatabaseProcessor():
     
     def __init__(self, database: DatabaseStrategy):
         self.database = database
-        self.processed_info = {}
+        self.processed_info = {
+            "tables": {},
+            "views": {}
+        }
 
     def process_data(self) -> dict:
         """Take the information of the database and process it for markdown insertion"""
@@ -31,7 +34,7 @@ class DatabaseProcessor():
                 table = self.database.table_object(table_name, schema_name)
                 fields = self.__get_processed_fields(table)
 
-                self.processed_info[fully_qualified_name] = {
+                self.processed_info["tables"][fully_qualified_name] = {
                     "name": table_name,
                     "schema": schema_name,
                     "estimated_rows": all_estimated_rows.get(table_name),
@@ -92,3 +95,5 @@ class DatabaseProcessor():
     def __get_processed_nullable(self, nullable: bool):
         return "NOT NULL" if not nullable else "NULL"
 
+    def __iterate_views(self):
+        pass
