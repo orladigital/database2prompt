@@ -12,10 +12,11 @@ class DatabaseProcessor():
         self.database = database
         self.processed_info = {}
 
-    def process_data(self):
+    def process_data(self) -> dict[str, dict[str, str]]:
         """Take the information of the database and process it for markdown insertion"""
 
         self.__iterate_tables(self.database.schemas())
+        return self.processed_info
 
     def __iterate_tables(self, schemas: list[str]):
         for schema_name in schemas:
@@ -48,13 +49,13 @@ class DatabaseProcessor():
         if isinstance(type, VARCHAR):
             return f"varchar({type.length})"
         elif isinstance(type, CHAR):
-            return "bpchar" if type.length != None else f"bpchar({type.length})"
+            return "bpchar" if type.length == None else f"bpchar({type.length})"
         elif isinstance(type, INTEGER):
             return "int4"
         elif isinstance(type, BIGINT):
             return "int8"
         elif isinstance(type, NUMERIC):
-            return f"numeric({type.precision}, {type.scale})"
+            return f"numeric({type.precision},{type.scale})"
         elif isinstance(type, DATE):
             return "date"
         elif isinstance(type, TIMESTAMP):
@@ -72,7 +73,7 @@ class DatabaseProcessor():
         if isinstance(default, DefaultClause):
             return f"DEFAULT {default.arg}"
         elif isinstance(default, Computed):
-            return f"GENERATED ALWAYS AS {default.sqltext} {"STORED" if default.persisted else ""}"
+            return f"GENERATED ALWAYS AS {default.sqltext}{" STORED" if default.persisted else ""}"
         elif isinstance(default, Identity):
             increment_by = f"INCREMENT BY {default.increment}"
             min_value = f"MINVALUE {default.minvalue}"
