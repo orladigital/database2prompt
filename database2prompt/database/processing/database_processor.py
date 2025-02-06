@@ -1,5 +1,7 @@
 from ..core.database_strategy import DatabaseStrategy
 
+from typing import List, Dict
+
 from sqlalchemy import Table
 from sqlalchemy.schema import FetchedValue, Computed, Identity, DefaultClause
 from sqlalchemy.sql.type_api import TypeEngine
@@ -19,7 +21,8 @@ class DatabaseProcessor():
     def process_data(self) -> dict:
         """Take the information of the database and process it for markdown insertion"""
 
-        self.__iterate_tables(self.database.schemas())
+        self.__iterate_tables(self.database.list_schemas())
+        self.__iterate_views(self.database.list_views())
         return self.processed_info
 
     def __iterate_tables(self, schemas: list[str]):
@@ -28,7 +31,7 @@ class DatabaseProcessor():
             all_estimated_rows = self.database.estimated_rows(tables)
 
             for table_name in tables:
-                fully_qualified_name = f"{schema_name}.{table_name}"
+                fully_qualified_name = f"{schema_name}.{table_name}" if schema_name != None else table_name
                 print(f"Discovering {fully_qualified_name} table...")
 
                 table = self.database.table_object(table_name, schema_name)
@@ -95,5 +98,11 @@ class DatabaseProcessor():
     def __get_processed_nullable(self, nullable: bool):
         return "NOT NULL" if not nullable else "NULL"
 
-    def __iterate_views(self):
-        pass
+    def __iterate_views(self, views: List[Dict[str, str]]):
+        for view in views:
+            fully_qualified_name = f"{view["schema"]}.{view["name"]}" if view["schema"] != None else view["name"]
+            self.processed_info["views"][fully_qualified_name] = {
+                "name": view["name"],
+                "schema": view["schema"],
+                "ddl": view["ddl"]
+            }

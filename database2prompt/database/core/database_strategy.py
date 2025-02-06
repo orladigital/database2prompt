@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from sqlalchemy import Table
+from typing import List, Dict
 
 class DatabaseStrategy(ABC):
 
@@ -8,7 +9,7 @@ class DatabaseStrategy(ABC):
         pass
 
     @abstractmethod
-    def schemas(self):
+    def list_schemas(self) -> List[str]:
         pass
 
     @abstractmethod
@@ -23,5 +24,6 @@ class DatabaseStrategy(ABC):
     def table_object(self, table: str, schema: str) -> Table:
         pass
 
-    def list_views(self):
+    @abstractmethod
+    def list_views(self) -> List[Dict[str, str]]:
         pass

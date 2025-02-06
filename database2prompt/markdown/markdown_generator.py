@@ -30,6 +30,25 @@ class MarkdownGenerator:
                 md_content += f"    {column_key} {column_data["type"]} {column_data["default"]} {column_data["nullable"]},\n"
             md_content += ");\n"
             md_content += "```\n"
+        
+        md_content += "\n"
+        md_content += "# Views \n"
+
+        views = self.processed_info["views"]
+
+        for view_key in views.keys():
+            md_content += f"- {view_key}\n"
+
+        for view_key in views.keys():
+            view = views[view_key]
             
+            md_content += "\n"
+            md_content += f"## View: {view_key}\n"
+            md_content += "\n"
+            md_content += "### DDL\n"
+            md_content += "```sql\n"
+            md_content += f"{view["ddl"]}\n"
+            md_content += "```\n"
+
         return md_content
     
