@@ -15,7 +15,7 @@ def test_processed_info():
     mock_table = Mock(Table)
     mock_readonly_column_collection = Mock(ReadOnlyColumnCollection)
 
-    mock_database_strategy.schemas.return_value = ["op"]
+    mock_database_strategy.list_schemas.return_value = ["op"]
     mock_database_strategy.list_tables.return_value = ["stock", "employee"]
     mock_database_strategy.estimated_rows.return_value = {}
     mock_database_strategy.table_object.return_value = mock_table
@@ -40,7 +40,7 @@ def test_processed_estimated_rows():
     mock_table = Mock(Table)
     mock_readonly_column_collection = Mock(ReadOnlyColumnCollection)
 
-    mock_database_strategy.schemas.return_value = ["public"]
+    mock_database_strategy.list_schemas.return_value = ["public"]
     mock_database_strategy.list_tables.return_value = ["stock", "employee", "user"]
     mock_database_strategy.estimated_rows.return_value = { "user": 1, "stock": 203, "employee": 54 }
     mock_database_strategy.table_object.return_value = mock_table
@@ -82,7 +82,7 @@ def test_processed_fields_types():
     mock_type_tsvector = Mock(TSVECTOR)
     mock_type_domain = Mock(DOMAIN)
 
-    mock_database_strategy.schemas.return_value = ["public"]
+    mock_database_strategy.list_schemas.return_value = ["public"]
     mock_database_strategy.list_tables.return_value = ["user"]
     mock_database_strategy.estimated_rows.return_value = { "user": 1 }
     mock_database_strategy.table_object.return_value = mock_table
@@ -173,7 +173,7 @@ def test_processed_fields_default_clause():
     mock_column_default = Mock(Column)
     mock_default_clause = Mock(DefaultClause)
 
-    mock_database_strategy.schemas.return_value = ["public"]
+    mock_database_strategy.list_schemas.return_value = ["public"]
     mock_database_strategy.list_tables.return_value = ["user"]
     mock_database_strategy.estimated_rows.return_value = { "user": 1 }
     mock_database_strategy.table_object.return_value = mock_table
@@ -204,7 +204,7 @@ def test_processed_fields_computed_value():
     mock_type_computed_not_persisted = Mock(Computed)
     mock_type_computed_persisted = Mock(Computed)
 
-    mock_database_strategy.schemas.return_value = ["public"]
+    mock_database_strategy.list_schemas.return_value = ["public"]
     mock_database_strategy.list_tables.return_value = ["user"]
     mock_database_strategy.estimated_rows.return_value = { "user": 1 }
     mock_database_strategy.table_object.return_value = mock_table
@@ -246,7 +246,7 @@ def test_processed_fields_generated_identity():
     mock_type_identity_cycle = Mock(Identity)
     mock_type_identity_no_cycle = Mock(Identity)
 
-    mock_database_strategy.schemas.return_value = ["public"]
+    mock_database_strategy.list_schemas.return_value = ["public"]
     mock_database_strategy.list_tables.return_value = ["user"]
     mock_database_strategy.estimated_rows.return_value = { "user": 1 }
     mock_database_strategy.table_object.return_value = mock_table
@@ -294,7 +294,7 @@ def test_processed_fields_nullable():
     mock_column_null = Mock(Column)
     mock_column_not_null = Mock(Column)
 
-    mock_database_strategy.schemas.return_value = ["public"]
+    mock_database_strategy.list_schemas.return_value = ["public"]
     mock_database_strategy.list_tables.return_value = ["user"]
     mock_database_strategy.estimated_rows.return_value = { "user": 1 }
     mock_database_strategy.table_object.return_value = mock_table

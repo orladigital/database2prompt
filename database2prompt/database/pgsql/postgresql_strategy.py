@@ -19,7 +19,7 @@ class PostgreSQLStrategy(DatabaseStrategy):
         finally:
             db.close()
 
-    def schemas(self):
+    def list_schemas(self):
         """Get all schemas of database"""
         inspector = inspect(self.engine)
         return filter(lambda s: s not in ["pg_catalog", "information_schema"], inspector.get_schema_names())
@@ -30,7 +30,7 @@ class PostgreSQLStrategy(DatabaseStrategy):
         tables = inspector.get_table_names(schema_name)
         return tables
 
-    def estimated_rows(self, tables_name) -> Dict[str, int]:
+    def estimated_rows(self, tables_name):
         query = """
             SELECT relname AS table_name, reltuples::bigint AS estimated_rows
             FROM pg_class
@@ -46,7 +46,7 @@ class PostgreSQLStrategy(DatabaseStrategy):
         return Table(table, metadata, schema=schema, autoload_with=self.engine)
         
 
-    def list_views(self) -> List[Dict[str, str]]:
+    def list_views(self):
         query = """
             SELECT schemaname, viewname, definition
             FROM pg_views
