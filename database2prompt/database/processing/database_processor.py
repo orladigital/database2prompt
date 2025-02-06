@@ -8,11 +8,12 @@ from sqlalchemy.dialects.postgresql.types import TSVECTOR
 from sqlalchemy.dialects.postgresql.named_types import DOMAIN
 
 class DatabaseProcessor():
+    
     def __init__(self, database: DatabaseStrategy):
         self.database = database
         self.processed_info = {}
 
-    def process_data(self) -> dict[str, dict[str, str]]:
+    def process_data(self) -> dict:
         """Take the information of the database and process it for markdown insertion"""
 
         self.__iterate_tables(self.database.schemas())
@@ -24,16 +25,18 @@ class DatabaseProcessor():
             all_estimated_rows = self.database.estimated_rows(tables)
 
             for table_name in tables:
+                fully_qualified_name = f"{schema_name}.{table_name}"
+                print(f"Discovering {fully_qualified_name} table...")
+
                 table = self.database.table_object(table_name, schema_name)
                 fields = self.__get_processed_fields(table)
 
-                self.processed_info[f"{schema_name}.{table_name}"] = {
+                self.processed_info[fully_qualified_name] = {
                     "name": table_name,
                     "schema": schema_name,
                     "estimated_rows": all_estimated_rows.get(table_name),
                     "fields": fields
                 }
-                print(self.processed_info[f"{schema_name}.{table_name}"], "\n")
 
     def __get_processed_fields(self, table: Table):
         fields = {}
