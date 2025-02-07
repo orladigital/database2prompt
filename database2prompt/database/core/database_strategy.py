@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
-
+from sqlalchemy import Table
+from typing import List, Dict
 
 class DatabaseStrategy(ABC):
 
@@ -8,12 +9,21 @@ class DatabaseStrategy(ABC):
         pass
 
     @abstractmethod
-    def list_tables(self):
+    def list_schemas(self) -> List[str]:
         pass
 
     @abstractmethod
-    def estimated_rows(self, tables_name):
+    def list_tables(self, schema_name: str):
         pass
 
-    def list_views(self):
+    @abstractmethod
+    def estimated_rows(self, tables_name: str):
+        pass
+
+    @abstractmethod
+    def table_object(self, table: str, schema: str) -> Table:
+        pass
+
+    @abstractmethod
+    def list_views(self) -> List[Dict[str, str]]:
         pass
