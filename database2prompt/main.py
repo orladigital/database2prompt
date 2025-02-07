@@ -1,6 +1,6 @@
 from database2prompt.database.core.database_factory import DatabaseFactory
-from database2prompt.markdown.generator import generate_markdown
-
+from database2prompt.database.processing.database_processor import DatabaseProcessor
+from database2prompt.markdown.markdown_generator import MarkdownGenerator
 
 def main():
     database = "pgsql"
@@ -8,19 +8,14 @@ def main():
 
     next(strategy.connection())
     print("Connected to the database!")
+    
+    database_processor = DatabaseProcessor(strategy)
+    processed_info = database_processor.process_data()
 
-    tables = strategy.list_tables()
-    print("tables: ", tables)
+    generator = MarkdownGenerator(processed_info)
+    generated_markdown = generator.generate()
 
-    estimated_rows = strategy.estimated_rows(tables)
-    print("Estimated_rows:", estimated_rows)
-
-    views = strategy.list_views()
-    print("views:", views)
-
-    output_file = "database-summary.md"
-
-    generated_markdown = generate_markdown(tables, estimated_rows, views)
+    output_file = "dist/output.md"
     with open(output_file, "w") as file:
         file.write(generated_markdown)
 
