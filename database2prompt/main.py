@@ -15,7 +15,7 @@ def main():
     generator = MarkdownGenerator(processed_info)
     generated_markdown = generator.generate()
 
-    output_file = "dist/output.md"
+    output_file = "summary-database.md"
     with open(output_file, "w") as file:
         file.write(generated_markdown)
 
