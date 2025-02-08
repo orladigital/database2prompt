@@ -2,7 +2,7 @@ from ..core.database_strategy import DatabaseStrategy
 
 from typing import List, Dict
 
-from sqlalchemy import Table
+from sqlalchemy import Table, Boolean
 from sqlalchemy.schema import FetchedValue, Computed, Identity, DefaultClause
 from sqlalchemy.sql.type_api import TypeEngine
 from sqlalchemy.sql.sqltypes import VARCHAR, INTEGER, BIGINT, NUMERIC, CHAR, DATE, TIMESTAMP
@@ -21,11 +21,11 @@ class DatabaseProcessor():
     def process_data(self) -> dict:
         """Take the information of the database and process it for markdown insertion"""
 
-        schemas = self.database.list_schemas()
-        if (len(schemas) != 0):
+        schemas = list(self.database.list_schemas())
+        if len(schemas) != 0:
             self.__iterate_tables(schemas)
         views = self.database.list_views()
-        if (len(views) != 0):
+        if len(views) != 0:
             self.__iterate_views(views)
         return self.processed_info
 
@@ -78,7 +78,9 @@ class DatabaseProcessor():
         elif isinstance(type, DOMAIN):
             return f"{type.schema}.{type.name}"
         else:
-            raise ValueError(f"Type {type.__class__} not implemented yet")
+            print("boolean not implemented")
+            return f"{type.__class__}"
+            #raise ValueError(f"Type {type.__class__} not implemented yet")
         
     def __get_processed_default_value(self, default: FetchedValue):
         if default is None: return

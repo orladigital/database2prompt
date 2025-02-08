@@ -1,15 +1,13 @@
-from typing import Dict, List
-
 from sqlalchemy import create_engine, inspect, text, MetaData, Table
-from database2prompt.database.core.database_strategy import DatabaseStrategy
 from sqlalchemy.orm import sessionmaker
-
 from database2prompt.database.core.database_strategy import DatabaseStrategy
-
 
 class PostgreSQLStrategy(DatabaseStrategy):
-    DATABASE_URL = "postgresql+psycopg2://admin:admin@localhost:5432/database_agent"
+    DATABASE_URL = "postgresql+psycopg2://app_user:secret@localhost:5432/postgres"
+
     engine = create_engine(DATABASE_URL)
+    metadata = MetaData(schema="operacional")
+    metadata.reflect(bind=engine)
     SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
     def connection(self):
