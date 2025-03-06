@@ -5,7 +5,7 @@ from typing import List, Dict
 from sqlalchemy import Table
 from sqlalchemy.schema import FetchedValue, Computed, Identity, DefaultClause
 from sqlalchemy.sql.type_api import TypeEngine
-from sqlalchemy.sql.sqltypes import VARCHAR, INTEGER, BIGINT, NUMERIC, CHAR, DATE, TIMESTAMP
+from sqlalchemy.sql.sqltypes import VARCHAR, INTEGER, BIGINT, NUMERIC, CHAR, DATE, TIMESTAMP, TEXT, DOUBLE_PRECISION
 from sqlalchemy.dialects.postgresql.types import TSVECTOR
 from sqlalchemy.dialects.postgresql.named_types import DOMAIN
 
@@ -21,7 +21,7 @@ class DatabaseProcessor():
     def process_data(self) -> dict:
         """Take the information of the database and process it for markdown insertion"""
 
-        schemas = self.database.list_schemas()
+        schemas = list(self.database.list_schemas())
         if (len(schemas) != 0):
             self.__iterate_tables(schemas)
         views = self.database.list_views()
@@ -73,10 +73,14 @@ class DatabaseProcessor():
             return "date"
         elif isinstance(type, TIMESTAMP):
             return "timestamp"
-        elif isinstance(type, TSVECTOR):
+        elif isinstance(type, TSVECTOR):    
             return "tsvector"
         elif isinstance(type, DOMAIN):
             return f"{type.schema}.{type.name}"
+        elif isinstance(type, TEXT):
+            return "text"
+        elif isinstance(type, DOUBLE_PRECISION):
+            return "double precision"
         else:
             raise ValueError(f"Type {type.__class__} not implemented yet")
         
