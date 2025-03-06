@@ -21,7 +21,7 @@ class DatabaseProcessor():
     def process_data(self) -> dict:
         """Take the information of the database and process it for markdown insertion"""
 
-        schemas = list(self.database.list_schemas())
+        schemas = self.database.list_schemas()
         if (len(schemas) != 0):
             self.__iterate_tables(schemas)
         views = self.database.list_views()
