@@ -3,7 +3,9 @@ An open-source project designed to extract relevant data from databases and tran
 
 ## How is it useful?
 
-database2prompt makes it easy to generate prompts for LLM from your database. It reads your PostgreSQL database and generates a markdown containing your database schema, where you will be able to pass as context to a LLM.
+database2prompt makes it easy to generate prompts to LLMS by reading your database and generating a markdown containing in its schema. Therefore, providing context for the AI to maximize the effectiveness of your prompts. 
+
+The project is very simple to use, just follow the quick install tutorial, and once you complete it, you will have a markdown generated at dist/output.md. 
 
 ## Quick install ⚡
 
@@ -35,3 +37,14 @@ database2prompt makes it easy to generate prompts for LLM from your database. It
 ## License
 
 Licensed under the MIT License, see <a href="https://github.com/orladigital/database2prompt/blob/main/LICENSE">LICENSE</a> for more information.
+
+## Contribute
+
+You can contribute to database2prompt in many different ways: 
+
+* Suggest a feature
+* Code an approved feature idea (you may find them on issues)
+* Report a bug
+* Fix something and open a pull request
+* Help us documenting the code!
+* Spreading the word! 
