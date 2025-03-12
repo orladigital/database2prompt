@@ -31,3 +31,7 @@ database2prompt makes it easy to generate prompts for LLM from your database. It
 
 `poetry build`
 `poetry run python database2prompt/main.py`
+
+## License
+
+Licensed under the MIT License, see <a href="https://github.com/orladigital/database2prompt/blob/main/LICENSE">LICENSE</a> for more information.
