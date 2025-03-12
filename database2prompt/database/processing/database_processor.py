@@ -5,7 +5,7 @@ from typing import List, Dict
 from sqlalchemy import Table
 from sqlalchemy.schema import FetchedValue, Computed, Identity, DefaultClause
 from sqlalchemy.sql.type_api import TypeEngine
-from sqlalchemy.sql.sqltypes import VARCHAR, INTEGER, BIGINT, NUMERIC, CHAR, DATE, TIMESTAMP
+from sqlalchemy.sql.sqltypes import VARCHAR, INTEGER, BIGINT, NUMERIC, CHAR, DATE, TIMESTAMP, TEXT, DOUBLE_PRECISION
 from sqlalchemy.dialects.postgresql.types import TSVECTOR
 from sqlalchemy.dialects.postgresql.named_types import DOMAIN
 
@@ -77,6 +77,10 @@ class DatabaseProcessor():
             return "tsvector"
         elif isinstance(type, DOMAIN):
             return f"{type.schema}.{type.name}"
+        elif isinstance(type, TEXT):
+            return "text"
+        elif isinstance(type, DOUBLE_PRECISION):
+            return "double precision"
         else:
             raise ValueError(f"Type {type.__class__} not implemented yet")
         
