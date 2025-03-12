@@ -1,6 +1,11 @@
 # database2prompt
 An open-source project designed to extract relevant data from databases and transform it into context for Retrieval-Augmented Generation (RAG) in generative AI applications.
 
+## How is it useful?
+
+database2prompt makes it easy to generate prompts for LLM from your database. It reads your PostgreSQL database and generates a markdown containing your database schema, where you will be able to pass as context to a LLM.
+
+## Quick install ⚡
 
 #### Create a enviroment
 
