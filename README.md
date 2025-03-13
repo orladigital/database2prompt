@@ -1,4 +1,11 @@
 # database2prompt
+
+<div style="width: 100%; display: flex; align-items: center; justify-content: center;">
+  
+![database2prompt](https://github.com/user-attachments/assets/e6a86262-dc0e-41e4-8983-8e81e60bdef3)
+
+</div>
+
 An open-source project designed to extract relevant data from databases and transform it into context for Retrieval-Augmented Generation (RAG) in generative AI applications.
 
 ## How is it useful?
