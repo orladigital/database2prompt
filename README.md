@@ -14,7 +14,7 @@ database2prompt makes it easy to generate prompts to LLMS by reading your databa
 
 The project is very simple to use, just follow the quick install tutorial, and once you complete it, you will have a markdown generated at dist/output.md. 
 
-## Quick install ⚡
+## Run locally 
 
 #### Create a enviroment
 
