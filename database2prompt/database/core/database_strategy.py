@@ -27,3 +27,7 @@ class DatabaseStrategy(ABC):
     @abstractmethod
     def list_views(self) -> List[Dict[str, str]]:
         pass
+
+    @abstractmethod
+    def create_materialized_view(self, query):
+        pass

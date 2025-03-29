@@ -10,7 +10,7 @@ def main():
     next(strategy.connection())
     print("Connected to the database!")
     
-    tables_to_discovery = ["your_table"]
+    tables_to_discovery = ["table_1", "table_2", "table_3"]
     params = DatabaseParams()
     params.tables(tables_to_discovery)
 
