@@ -1,6 +1,8 @@
 from sqlalchemy import create_engine, inspect, text, MetaData, Table
 from sqlalchemy.orm import sessionmaker
+
 from database2prompt.database.core.database_strategy import DatabaseStrategy
+
 
 class PostgreSQLStrategy(DatabaseStrategy):
     DATABASE_URL = "postgresql+psycopg2://app_user:secret@localhost:5432/postgres"
@@ -38,11 +40,10 @@ class PostgreSQLStrategy(DatabaseStrategy):
         with self.engine.connect() as connection:
             result = connection.execute(text(query), {"table_names": tables_name})
             return {row._mapping["table_name"]: row._mapping["estimated_rows"] for row in result}
-        
+
     def table_object(self, table, schema):
         metadata = MetaData()
         return Table(table, metadata, schema=schema, autoload_with=self.engine)
-        
 
     def list_views(self):
         query = """
@@ -59,3 +60,8 @@ class PostgreSQLStrategy(DatabaseStrategy):
                 views.append({"schema": row.schemaname, "name": row.viewname, "ddl": row.definition})
 
         return views
+
+    def create_materialized_view(self, sql):
+        with self.engine.connect() as connection:
+            result = connection.execute(text(sql))
+            connection.commit()
