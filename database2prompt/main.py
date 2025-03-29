@@ -10,7 +10,7 @@ def main():
     next(strategy.connection())
     print("Connected to the database!")
     
-    tables_to_discovery = ["your_table"]
+    tables_to_discovery = ["operacional.tb_informacao_diaria", "operacional.tb_fundo_casca", "operacional.tb_casca_classe_subclasse"]
     params = DatabaseParams()
     params.tables(tables_to_discovery)
 

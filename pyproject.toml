@@ -1,6 +1,6 @@
 [project]
 name = "database2prompt"
-version = "0.1.0"
+version = "0.1.2"
 description = ""
 authors = [
     {name = "jose.neto",email = "jose.neto-ext@anbima.com.br"}
