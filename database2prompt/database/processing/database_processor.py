@@ -23,25 +23,32 @@ class DatabaseProcessor():
         }
         self.params = params
 
-    def process_data(self) -> dict:
-        """Take the information of the database and process it for markdown insertion"""
+    def process_data(self, verbose: bool = False) -> dict:
+        """Take the information of the database and process it for markdown insertion
 
+        Args:
+            verbose (bool, optional): If True, prints discovery progress. Defaults to False.
+        
+        Returns:
+            dict: Processed database information
+        """
         schemas = list(self.database.list_schemas())
         if len(schemas) != 0:
-            self.__iterate_tables(schemas)
+            self.__iterate_tables(schemas, verbose)
         views = self.database.list_views()
         if len(views) != 0:
-            self.__iterate_views(views)
+            self.__iterate_views(views, verbose)
         return self.processed_info
 
-    def __iterate_tables(self, schemas: list[str]):
+    def __iterate_tables(self, schemas: list[str], verbose: bool = False):
         for schema_name in schemas:
             tables = self.database.list_tables(schema_name)
             all_estimated_rows = self.database.estimated_rows(tables)
 
             for table_name in tables:
                 fully_qualified_name = f"{schema_name}.{table_name}" if schema_name != None else table_name
-                print(f"Discovering {fully_qualified_name} table...")
+                if verbose:
+                    print(f"Discovering {fully_qualified_name} table...")
 
                 table = self.database.table_object(table_name, schema_name)
                 fields = self.__get_processed_fields(table)
@@ -88,7 +95,7 @@ class DatabaseProcessor():
         elif isinstance(type, DOUBLE_PRECISION):
             return "double precision"
         else:
-            print("boolean not implemented")
+            print(f"type: {type} not implemented")
             return f"{type.__class__}"
             # raise ValueError(f"Type {type.__class__} not implemented yet")
 
@@ -114,9 +121,11 @@ class DatabaseProcessor():
     def __get_processed_nullable(self, nullable: bool):
         return "NOT NULL" if not nullable else "NULL"
 
-    def __iterate_views(self, views: List[Dict[str, str]]):
+    def __iterate_views(self, views: List[Dict[str, str]], verbose: bool = False):
         for view in views:
             fully_qualified_name = f"{view["schema"]}.{view["name"]}" if view["schema"] != None else view["name"]
+            if verbose:
+                print(f"Discovering {fully_qualified_name} view...")
             self.processed_info["views"][fully_qualified_name] = {
                 "name": view["name"],
                 "schema": view["schema"],
