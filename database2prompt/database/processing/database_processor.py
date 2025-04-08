@@ -101,9 +101,7 @@ class DatabaseProcessor():
         elif isinstance(type, DOUBLE_PRECISION):
             return "double precision"
         else:
-            print(f"type: {type} not implemented")
-            return f"{type.__class__}"
-            # raise ValueError(f"Type {type.__class__} not implemented yet")
+            return str(type)
 
     def __get_processed_default_value(self, default: FetchedValue):
         if default is None: return
