@@ -42,6 +42,6 @@ class DatabaseParams:
         """
         if table_name in self._ignored_tables:
             return False
-        if not self._tables:  # Se não há tabelas especificadas, documenta todas exceto as ignoradas
+        if not self._tables:
             return True
         return table_name in self._tables
