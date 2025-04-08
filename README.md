@@ -10,48 +10,125 @@ An open-source project designed to extract relevant data from databases and tran
 
 ## How is it useful?
 
-database2prompt makes it easy to generate prompts to LLMS by reading your database and generating a markdown containing in its schema. Therefore, providing context for the AI to maximize the effectiveness of your prompts. 
+database2prompt makes it easy to generate prompts to LLMS by reading your database and generating a markdown containing its schema. This provides context for the AI to maximize the effectiveness of your prompts.
 
-The project is very simple to use, just follow the quick install tutorial, and once you complete it, you will have a markdown generated at dist/output.md. 
+## Usage
 
-## Run locally 
+### Installation
 
-#### Create a enviroment
+```bash
+pip install database2prompt
+```
 
-`python -m venv .venv`
+### Quick Start
 
-#### Active enviroment 
+Here's a simple example of how to use database2prompt:
 
-`source .venv/bin/activate`
+```python
+from database2prompt.database.core.database_config import DatabaseConfig
+from database2prompt.database.core.database_params import DatabaseParams
+from database2prompt.database.core.database_factory import DatabaseFactory
+from database2prompt.database.processing.database_processor import DatabaseProcessor
+from database2prompt.markdown.markdown_generator import MarkdownGenerator
 
-#### Install poetry
+# 1. Configure database connection
+config = DatabaseConfig(
+    host="localhost",
+    port=5432,
+    user="your_user",
+    password="your_password",
+    database="your_database",
+    schema="your_schema"
+)
 
-`pip install poetry`
+# 2. Connect to database
+strategy = DatabaseFactory.run("pgsql", config)
+next(strategy.connection())
 
-#### Install dependencies
+# 3. Configure which tables to document
+params = DatabaseParams()
 
-`poetry install`
+# Option A: Document specific tables
+params.tables(["schema.table1", "schema.table2"])
 
-#### Start database
+# Option B: Ignore specific tables
+params.ignore_tables(["schema.table_to_ignore"])
 
-`docker compose up -d`
+# 4. Process database information
+database_processor = DatabaseProcessor(strategy, params)
+processed_info = database_processor.process_data(verbose=True)
 
-#### Run project
+# 5. Generate markdown
+generator = MarkdownGenerator(processed_info)
+generated_markdown = generator.generate()
 
-`poetry build`
-`poetry run python database2prompt/main.py`
+# 6. Save to file
+with open("database-docs.md", "w") as f:
+    f.write(generated_markdown)
+```
+
+### Configuration
+
+Configure the database connection:
+
+```bash
+   # .env file
+   DB_HOST=localhost
+   DB_PORT=5432
+   DB_USER=postgres
+   DB_PASSWORD=postgres
+   DB_NAME=postgres
+   DB_SCHEMA=public
+```
+
+```python
+   config = DatabaseConfig.from_env()
+```
+
+## Contributing
+
+### Development Setup
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/orladigital/database2prompt.git
+   cd database2prompt
+   ```
+
+2. Create a virtual environment:
+   ```bash
+   python -m venv .venv
+   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+   ```
+
+3. Install development dependencies:
+   ```bash
+   pip install poetry
+   poetry install
+   ```
+
+4. Start the development database (optional):
+   ```bash
+   docker compose up -d
+   ```
+
+5. Run the project:
+   ```bash
+   poetry run python database2prompt/main.py
+   ```
+
+### How to Contribute
+
+You can contribute to database2prompt in many different ways:
+
+* Suggest a feature
+* Code an approved feature idea (check our issues)
+* Report a bug
+* Fix something and open a pull request
+* Help with documentation
+* Spread the word!
 
 ## License
 
-Licensed under the MIT License, see <a href="https://github.com/orladigital/database2prompt/blob/main/LICENSE">LICENSE</a> for more information.
+Licensed under the MIT License, see [LICENSE](https://github.com/orladigital/database2prompt/blob/main/LICENSE) for more information.
 
-## Contribute
-
-You can contribute to database2prompt in many different ways: 
-
-* Suggest a feature
-* Code an approved feature idea (you may find them on issues)
-* Report a bug
-* Fix something and open a pull request
-* Help us documenting the code!
-* Spreading the word! 
