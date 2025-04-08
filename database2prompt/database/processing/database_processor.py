@@ -47,19 +47,25 @@ class DatabaseProcessor():
 
             for table_name in tables:
                 fully_qualified_name = f"{schema_name}.{table_name}" if schema_name != None else table_name
+                
+                # Verifica se a tabela deve ser ignorada
+                if not self.params.should_document_table(fully_qualified_name):
+                    if verbose:
+                        print(f"Skipping {fully_qualified_name} table (ignored)...")
+                    continue
+                
                 if verbose:
                     print(f"Discovering {fully_qualified_name} table...")
 
                 table = self.database.table_object(table_name, schema_name)
                 fields = self.__get_processed_fields(table)
 
-                if self.params is not None and self.params._tables.__contains__(fully_qualified_name):
-                    self.processed_info["tables"][fully_qualified_name] = {
-                        "name": table_name,
-                        "schema": schema_name,
-                        "estimated_rows": all_estimated_rows.get(table_name),
-                        "fields": fields
-                    }
+                self.processed_info["tables"][fully_qualified_name] = {
+                    "name": table_name,
+                    "schema": schema_name,
+                    "estimated_rows": all_estimated_rows.get(table_name),
+                    "fields": fields
+                }
 
     def __get_processed_fields(self, table: Table):
         fields = {}
