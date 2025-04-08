@@ -32,6 +32,37 @@ The project is very simple to use, just follow the quick install tutorial, and o
 
 `poetry install`
 
+#### Configure Database
+
+You can configure the database connection in two ways:
+
+1. Using environment variables:
+   - Copy `.env.example` to `.env`
+   - Edit the `.env` file with your database credentials
+   - The following variables are available:
+     ```
+     DB_HOST=localhost
+     DB_PORT=5432
+     DB_USER=postgres
+     DB_PASSWORD=postgres
+     DB_NAME=postgres
+     DB_SCHEMA=public
+     ```
+
+2. Or programmatically in your code:
+   ```python
+   from database2prompt.database.core.database_config import DatabaseConfig
+   
+   config = DatabaseConfig(
+       host="localhost",
+       port=5432,
+       user="your_user",
+       password="your_password",
+       database="your_database",
+       schema="your_schema"
+   )
+   ```
+
 #### Start database
 
 `docker compose up -d`
