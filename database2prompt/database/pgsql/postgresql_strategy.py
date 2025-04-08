@@ -5,7 +5,7 @@ from database2prompt.database.core.database_strategy import DatabaseStrategy
 
 
 class PostgreSQLStrategy(DatabaseStrategy):
-    DATABASE_URL = "postgresql+psycopg2://app_user:secret@localhost:5432/postgres"
+    DATABASE_URL = "postgresql+psycopg2://admin:admin@localhost:5432/database_agent"
 
     engine = create_engine(DATABASE_URL)
     metadata = MetaData(schema="operacional")
