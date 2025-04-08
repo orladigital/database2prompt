@@ -17,9 +17,15 @@ def main():
     next(strategy.connection())
     print("Connected to the database!")
     
+    # Tabelas para documentar
     tables_to_discovery = ["table_1", "table_2", "table_3"]
+    
+    # Tabelas para ignorar
+    tables_to_ignore = ["operacional.xx"]
+    
     params = DatabaseParams()
     params.tables(tables_to_discovery)
+    params.ignore_tables(tables_to_ignore)  # Ignora estas tabelas na documentação
 
     database_processor = DatabaseProcessor(strategy, params)
     processed_info = database_processor.process_data(verbose=False)
