@@ -1,12 +1,19 @@
 from database2prompt.database.core.database_factory import DatabaseFactory
 from database2prompt.database.core.database_params import DatabaseParams
+from database2prompt.database.core.database_config import DatabaseConfig
 from database2prompt.database.processing.database_processor import DatabaseProcessor
 from database2prompt.markdown.markdown_generator import MarkdownGenerator
 
 def main():
-    database = "pgsql"
-    strategy = DatabaseFactory.run(database)
-
+    config = DatabaseConfig(
+        host="localhost",
+        port=5432,
+        user="admin",
+        password="admin",
+        database="FUNDOS_CER",
+        schema="operacional"
+    )
+    strategy = DatabaseFactory.run("pgsql", config)
     next(strategy.connection())
     print("Connected to the database!")
     
