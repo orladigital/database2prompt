@@ -1,16 +1,18 @@
-from typing import Dict, List
-
 from sqlalchemy import create_engine, inspect, text, MetaData, Table
-from database2prompt.database.core.database_strategy import DatabaseStrategy
 from sqlalchemy.orm import sessionmaker
 
 from database2prompt.database.core.database_strategy import DatabaseStrategy
+from database2prompt.database.core.database_config import DatabaseConfig
 
 
 class PostgreSQLStrategy(DatabaseStrategy):
-    DATABASE_URL = "postgresql+psycopg2://admin:admin@localhost:5432/database_agent"
-    engine = create_engine(DATABASE_URL)
-    SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+    def __init__(self, config: DatabaseConfig):
+        self.config = config
+        self.database_url = f"postgresql+psycopg2://{config.user}:{config.password}@{config.host}:{config.port}/{config.database}"
+        self.engine = create_engine(self.database_url)
+        self.metadata = MetaData(schema=config.schema)
+        self.metadata.reflect(bind=self.engine)
+        self.SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=self.engine)
 
     def connection(self):
         db = self.SessionLocal()
@@ -40,11 +42,10 @@ class PostgreSQLStrategy(DatabaseStrategy):
         with self.engine.connect() as connection:
             result = connection.execute(text(query), {"table_names": tables_name})
             return {row._mapping["table_name"]: row._mapping["estimated_rows"] for row in result}
-        
+
     def table_object(self, table, schema):
         metadata = MetaData()
         return Table(table, metadata, schema=schema, autoload_with=self.engine)
-        
 
     def list_views(self):
         query = """
@@ -61,3 +62,8 @@ class PostgreSQLStrategy(DatabaseStrategy):
                 views.append({"schema": row.schemaname, "name": row.viewname, "ddl": row.definition})
 
         return views
+
+    def create_materialized_view(self, sql):
+        with self.engine.connect() as connection:
+            result = connection.execute(text(sql))
+            connection.commit()

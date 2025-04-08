@@ -3,3 +3,4 @@ __pycache__
 
 dist
 .idea
+database2prompt/database-summary.md
