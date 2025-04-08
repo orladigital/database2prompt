@@ -2,15 +2,17 @@ from sqlalchemy import create_engine, inspect, text, MetaData, Table
 from sqlalchemy.orm import sessionmaker
 
 from database2prompt.database.core.database_strategy import DatabaseStrategy
+from database2prompt.database.core.database_config import DatabaseConfig
 
 
 class PostgreSQLStrategy(DatabaseStrategy):
-    DATABASE_URL = "postgresql+psycopg2://admin:admin@localhost:5432/FUNDOS_CER"
-
-    engine = create_engine(DATABASE_URL)
-    metadata = MetaData(schema="operacional")
-    metadata.reflect(bind=engine)
-    SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+    def __init__(self, config: DatabaseConfig):
+        self.config = config
+        self.database_url = f"postgresql+psycopg2://{config.user}:{config.password}@{config.host}:{config.port}/{config.database}"
+        self.engine = create_engine(self.database_url)
+        self.metadata = MetaData(schema=config.schema)
+        self.metadata.reflect(bind=self.engine)
+        self.SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=self.engine)
 
     def connection(self):
 
