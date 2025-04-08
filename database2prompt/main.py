@@ -15,7 +15,7 @@ def main():
     params.tables(tables_to_discovery)
 
     database_processor = DatabaseProcessor(strategy, params)
-    processed_info = database_processor.process_data()
+    processed_info = database_processor.process_data(verbose=False)
 
     generator = MarkdownGenerator(processed_info)
     generated_markdown = generator.generate()
