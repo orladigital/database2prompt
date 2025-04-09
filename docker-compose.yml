@@ -2,13 +2,29 @@ version: "3"
 services:
   postgres:
     image: postgres
-    network_mode: host
+    ports:
+      - "5432:5432"
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
       POSTGRES_DB: database_agent
     volumes:
       - postgres-data:/var/lib/postgresql/data
+
+  mcp_server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=admin
+      - DB_PASSWORD=admin
+      - DB_NAME=database_agent
 
 volumes:
   postgres-data:
