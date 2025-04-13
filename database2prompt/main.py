@@ -10,20 +10,19 @@ def main():
         port=5432,
         user="admin",
         password="admin",
-        database="FUNDOS_CER",
-        schema="operacional"
+        database="database_agent",
+        schema="public"
     )
     strategy = DatabaseFactory.run("pgsql", config)
     next(strategy.connection())
     print("Connected to the database!")
     
     # Tabelas para documentar
-    tables_to_discovery = ["operacional.tb_informacao_diaria", "operacional.tb_fundo_casca", "operacional.tb_casca_classe_subclasse"]
-
+    tables_to_discovery = ["table_1", "table_2"]
+    
     # Tabelas para ignorar
-    tables_to_ignore = ["operacional.xx"]
-
-    tables_to_discovery = ["table1", "table2", "table3"]
+    tables_to_ignore = ["table_3", "table_4"]
+    
     params = DatabaseParams()
     params.tables(tables_to_discovery)
     params.ignore_tables(tables_to_ignore)  # Ignora estas tabelas na documentação
