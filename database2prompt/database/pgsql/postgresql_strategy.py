@@ -13,6 +13,7 @@ class PostgreSQLStrategy(DatabaseStrategy):
     SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
     def connection(self):
+
         db = self.SessionLocal()
         try:
             yield db
