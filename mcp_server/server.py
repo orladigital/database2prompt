@@ -4,7 +4,7 @@ from database2prompt.database.core.database_factory import DatabaseFactory
 from typing import Optional
 
 # Create an MCP server
-mcp = FastMCP("Database2Prompt")
+mcp = FastMCP("Database2Prompt Server")
 
 @mcp.tool()
 def connect_database(
