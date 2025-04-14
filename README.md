@@ -12,7 +12,17 @@ An open-source project designed to extract relevant data from databases and tran
 
 database2prompt makes it easy to generate prompts to LLMS by reading your database and generating a markdown containing its schema. This provides context for the AI to maximize the effectiveness of your prompts.
 
+
+## Roadmap 
+
+- [ ] Ability to create custom markdown 
+- [ ] Ability to add labels to tables and columns
+- [ ] MCP Server to communication
+- [ ] Adds support to other databases
+
 ## Usage
+
+- Only support postgresql for now
 
 ### Installation
 
