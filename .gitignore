@@ -1,6 +1,7 @@
+.idea
+
 .venv
 __pycache__
 
 dist
-.idea
-database2prompt/database-summary.md
+.env
