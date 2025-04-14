@@ -5,27 +5,19 @@ from database2prompt.database.processing.database_processor import DatabaseProce
 from database2prompt.markdown.markdown_generator import MarkdownGenerator
 
 def main():
-    config = DatabaseConfig(
-        host="localhost",
-        port=5432,
-        user="admin",
-        password="admin",
-        database="FUNDOS_CER",
-        schema="operacional"
-    )
-    strategy = DatabaseFactory.run("pgsql", config)
+    strategy = DatabaseFactory.run("pgsql", DatabaseConfig.from_env())
     next(strategy.connection())
     print("Connected to the database!")
     
     # Tabelas para documentar
-    tables_to_discovery = ["operacional.tb_informacao_diaria", "operacional.tb_fundo_casca", "operacional.tb_casca_classe_subclasse"]
+    # tables_to_discovery = ["user"]
     
-    # Tabelas para ignorar
-    tables_to_ignore = ["operacional.xx"]
+    # # Tabelas para ignorar
+    # tables_to_ignore = ["data"]
     
     params = DatabaseParams()
-    params.tables(tables_to_discovery)
-    params.ignore_tables(tables_to_ignore)  # Ignora estas tabelas na documentação
+    # params.tables(tables_to_discovery)
+    # params.ignore_tables(tables_to_ignore)  # Ignora estas tabelas na documentação
 
     database_processor = DatabaseProcessor(strategy, params)
     processed_info = database_processor.process_data(verbose=False)
