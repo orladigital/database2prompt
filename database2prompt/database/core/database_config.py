@@ -1,6 +1,6 @@
 import os
 from dataclasses import dataclass
-from typing import Optional
+from dotenv import load_dotenv
 
 @dataclass
 class DatabaseConfig:
@@ -14,6 +14,8 @@ class DatabaseConfig:
     @staticmethod
     def from_env() -> "DatabaseConfig":
         """Create database config from environment variables"""
+        load_dotenv()
+        
         return DatabaseConfig(
             host=os.getenv("DB_HOST", "localhost"),
             port=int(os.getenv("DB_PORT", "5432")),
