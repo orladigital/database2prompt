@@ -1,0 +1,122 @@
+{
+  "tables": [
+    {
+      "table_name": "public.investors",
+      "schema": "public",
+      "estimated_rows": -1,
+      "columns": [
+        {
+          "name": "investor_id",
+          "type": "int4",
+          "nullable": false,
+          "default": "DEFAULT nextval('\"public\".investors_investor_id_seq'::regclass)"
+        },
+        {
+          "name": "name",
+          "type": "varchar(100)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "email",
+          "type": "varchar(100)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp",
+          "nullable": true,
+          "default": "DEFAULT CURRENT_TIMESTAMP"
+        }
+      ]
+    },
+    {
+      "table_name": "public.trades",
+      "schema": "public",
+      "estimated_rows": -1,
+      "columns": [
+        {
+          "name": "trade_id",
+          "type": "int4",
+          "nullable": false,
+          "default": "DEFAULT nextval('\"public\".trades_trade_id_seq'::regclass)"
+        },
+        {
+          "name": "investor_id",
+          "type": "int4",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "stock_id",
+          "type": "int4",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "trade_date",
+          "type": "date",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "quantity",
+          "type": "int4",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "price_per_share",
+          "type": "numeric(10,2)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "trade_type",
+          "type": "varchar(4)",
+          "nullable": true,
+          "default": null
+        }
+      ]
+    },
+    {
+      "table_name": "public.stocks",
+      "schema": "public",
+      "estimated_rows": -1,
+      "columns": [
+        {
+          "name": "stock_id",
+          "type": "int4",
+          "nullable": false,
+          "default": "DEFAULT nextval('\"public\".stocks_stock_id_seq'::regclass)"
+        },
+        {
+          "name": "symbol",
+          "type": "varchar(10)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "company_name",
+          "type": "varchar(255)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "sector",
+          "type": "varchar(100)",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "listed_since",
+          "type": "date",
+          "nullable": true,
+          "default": null
+        }
+      ]
+    }
+  ],
+  "views": []
+}
