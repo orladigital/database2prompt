@@ -2,8 +2,10 @@ from sqlite3.dbapi2 import paramstyle
 
 from ..core.database_params import DatabaseParams
 from ..core.database_strategy import DatabaseStrategy
+from ...markdown.markdown_generator import MarkdownGenerator
+from ...json_generator.json_generator import JsonGenerator
 
-from typing import List, Dict
+from typing import List, Dict, Literal
 
 from sqlalchemy import Table, Boolean
 from sqlalchemy.schema import FetchedValue, Computed, Identity, DefaultClause
@@ -12,6 +14,7 @@ from sqlalchemy.sql.sqltypes import VARCHAR, INTEGER, BIGINT, NUMERIC, CHAR, DAT
 from sqlalchemy.dialects.postgresql.types import TSVECTOR
 from sqlalchemy.dialects.postgresql.named_types import DOMAIN
 
+OutputFormat = Literal["json", "markdown"]
 
 class DatabaseProcessor():
 
@@ -23,8 +26,30 @@ class DatabaseProcessor():
         }
         self.params = params
 
+    def database_to_prompt(self, output_format: OutputFormat = "markdown") -> str:
+        """Generate documentation from database in the specified format
+
+        Args:
+            output_format (str): The output format - either "json" or "markdown"
+
+        Returns:
+            str: The generated documentation in the specified format
+        """
+        # Process database information
+        processed_info = self.process_data(verbose=False)
+
+        # Generate output based on format
+        if output_format == "markdown":
+            generator = MarkdownGenerator(processed_info)
+            return generator.generate()
+        elif output_format == "json":
+            generator = JsonGenerator(processed_info)
+            return generator.generate()
+        else:
+            raise ValueError("Output format must be either 'json' or 'markdown'")
+
     def process_data(self, verbose: bool = False) -> dict:
-        """Take the information of the database and process it for markdown insertion
+        """Take the information of the database and process it for output generation
 
         Args:
             verbose (bool, optional): If True, prints discovery progress. Defaults to False.
@@ -32,6 +57,12 @@ class DatabaseProcessor():
         Returns:
             dict: Processed database information
         """
+        # Reset processed info to ensure clean state
+        self.processed_info = {
+            "tables": {},
+            "views": {}
+        }
+
         schemas = list(self.database.list_schemas())
         if len(schemas) != 0:
             self.__iterate_tables(schemas, verbose)
