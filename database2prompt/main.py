@@ -2,10 +2,20 @@ from database2prompt.database.core.database_factory import DatabaseFactory
 from database2prompt.database.core.database_params import DatabaseParams
 from database2prompt.database.core.database_config import DatabaseConfig
 from database2prompt.database.processing.database_processor import DatabaseProcessor
-from database2prompt.markdown.markdown_generator import MarkdownGenerator
+import json
 
 def main():
-    strategy = DatabaseFactory.run("pgsql", DatabaseConfig.from_env())
+
+    config = DatabaseConfig(
+    host="localhost",
+    port=5432,
+    user="admin",
+    password="admin",
+    database="database_agent",
+    schema="public"
+    )
+
+    strategy = DatabaseFactory.run("pgsql", config)
     next(strategy.connection())
     print("Connected to the database!")
     
@@ -20,15 +30,18 @@ def main():
     # params.ignore_tables(tables_to_ignore)  # Ignora estas tabelas na documentação
 
     database_processor = DatabaseProcessor(strategy, params)
-    processed_info = database_processor.process_data(verbose=False)
 
-    generator = MarkdownGenerator(processed_info)
-    generated_markdown = generator.generate()
+    # Generate Markdown
+    markdown_content = database_processor.database_to_prompt(output_format="markdown")
+    with open("summary-database.md", "w") as file:
+        file.write(markdown_content)
+    print("Markdown file generated: summary-database.md")
 
-    output_file = "summary-database.md"
-    with open(output_file, "w") as file:
-        file.write(generated_markdown)
+    # Generate JSON
+    json_content = database_processor.database_to_prompt(output_format="json")
+    with open("summary-database.json", "w", encoding="utf-8") as file:
+        json.dump(json_content, file, indent=2, ensure_ascii=False)
+    print("JSON file generated: summary-database.json")
 
-    print(f"Markdown file generated: {output_file}")
 if __name__ == "__main__":
     main()
