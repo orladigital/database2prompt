@@ -1,6 +1,6 @@
 [project]
 name = "database2prompt"
-version = "0.1.4"
+version = "0.1.5"
 description = "Extract relevant metadata from databases and transform it into context for Retrieval-Augmented Generation (RAG) in generative AI applications."
 authors = [
     {name = "jose.neto",email = "jose.neto-ext@anbima.com.br"}
