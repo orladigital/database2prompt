@@ -2,8 +2,8 @@ name: Publish database2prompt to PyPI
 
 on:
   push:
-    tags:
-      - 'v*.*.*'
+    branches:
+      - 'release/**'
 
 permissions:
   id-token: write
@@ -13,6 +13,7 @@ jobs:
   build-and-publish:
     name: Build and publish to PyPI
     runs-on: ubuntu-latest
+    environment: release
 
     steps:
       - name: Checkout code
