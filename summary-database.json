@@ -29,6 +29,20 @@
           "nullable": true,
           "default": "DEFAULT CURRENT_TIMESTAMP"
         }
+      ],
+      "sample_data": [
+        {
+          "investor_id": 1,
+          "name": "John Smith",
+          "email": "john.smith@email.com",
+          "created_at": "2024-01-15T10:30:00"
+        },
+        {
+          "investor_id": 2,
+          "name": "Maria Garcia",
+          "email": "maria.garcia@email.com",
+          "created_at": "2024-02-01T14:20:00"
+        }
       ]
     },
     {
@@ -78,6 +92,26 @@
           "nullable": true,
           "default": null
         }
+      ],
+      "sample_data": [
+        {
+          "trade_id": 1,
+          "investor_id": 1,
+          "stock_id": 1,
+          "trade_date": "2024-03-15",
+          "quantity": 100,
+          "price_per_share": 150.50,
+          "trade_type": "BUY"
+        },
+        {
+          "trade_id": 2,
+          "investor_id": 2,
+          "stock_id": 2,
+          "trade_date": "2024-03-16",
+          "quantity": 50,
+          "price_per_share": 275.75,
+          "trade_type": "SELL"
+        }
       ]
     },
     {
@@ -114,6 +148,22 @@
           "type": "date",
           "nullable": true,
           "default": null
+        }
+      ],
+      "sample_data": [
+        {
+          "stock_id": 1,
+          "symbol": "AAPL",
+          "company_name": "Apple Inc.",
+          "sector": "Technology",
+          "listed_since": "1980-12-12"
+        },
+        {
+          "stock_id": 2,
+          "symbol": "MSFT",
+          "company_name": "Microsoft Corporation",
+          "sector": "Technology",
+          "listed_since": "1986-03-13"
         }
       ]
     }
