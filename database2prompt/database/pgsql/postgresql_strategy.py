@@ -1,5 +1,6 @@
 from sqlalchemy import create_engine, inspect, text, MetaData, Table
 from sqlalchemy.orm import sessionmaker
+from typing import List, Dict
 
 from database2prompt.database.core.database_strategy import DatabaseStrategy
 from database2prompt.database.core.database_config import DatabaseConfig
@@ -67,3 +68,14 @@ class PostgreSQLStrategy(DatabaseStrategy):
         with self.engine.connect() as connection:
             result = connection.execute(text(sql))
             connection.commit()
+
+    def get_table_sample(self, table: str, schema: str, limit: int = 5) -> List[Dict]:
+        query = f"""
+            SELECT *
+            FROM {schema}.{table}
+            LIMIT {limit}
+        """
+        
+        with self.engine.connect() as connection:
+            result = connection.execute(text(query))
+            return [dict(row._mapping) for row in result]

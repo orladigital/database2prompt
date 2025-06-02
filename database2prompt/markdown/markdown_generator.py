@@ -30,6 +30,21 @@ class MarkdownGenerator:
                 md_content += f"    {column_key} {column_data["type"]} {column_data["default"]} {column_data["nullable"]},\n"
             md_content += ");\n"
             md_content += "```\n"
+
+            
+            if "sample_data" in table_data and table_data["sample_data"]:
+                md_content += "\n### Sample Data\n\n"
+                md_content += "```sql\n"
+                
+                headers = list(table_data["sample_data"][0].keys())
+                md_content += "| " + " | ".join(headers) + " |\n"
+                md_content += "| " + " | ".join(["---"] * len(headers)) + " |\n"
+                
+                
+                for row in table_data["sample_data"]:
+                    values = [str(row.get(header, "")) for header in headers]
+                    md_content += "| " + " | ".join(values) + " |\n"
+                md_content += "```\n"
         
         md_content += "\n"
         md_content += "# Views \n"

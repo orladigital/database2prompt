@@ -91,11 +91,20 @@ class DatabaseProcessor():
                 table = self.database.table_object(table_name, schema_name)
                 fields = self.__get_processed_fields(table)
 
+                
+                try:
+                    sample_data = self.database.get_table_sample(table_name, schema_name)
+                except Exception as e:
+                    if verbose:
+                        print(f"Could not get sample data for {fully_qualified_name}: {str(e)}")
+                    sample_data = []
+
                 self.processed_info["tables"][fully_qualified_name] = {
                     "name": table_name,
                     "schema": schema_name,
                     "estimated_rows": all_estimated_rows.get(table_name),
-                    "fields": fields
+                    "fields": fields,
+                    "sample_data": sample_data
                 }
 
     def __get_processed_fields(self, table: Table):

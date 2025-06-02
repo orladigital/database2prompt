@@ -31,3 +31,7 @@ class DatabaseStrategy(ABC):
     @abstractmethod
     def create_materialized_view(self, query):
         pass
+
+    @abstractmethod
+    def get_table_sample(self, table: str, schema: str, limit: int = 5) -> List[Dict]:
+        pass

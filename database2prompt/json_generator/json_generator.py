@@ -21,7 +21,8 @@ class JsonGenerator:
                 "table_name": table_name,
                 "schema": table_info["schema"],
                 "estimated_rows": table_info["estimated_rows"],
-                "columns": []
+                "columns": [],
+                "sample_data": table_info.get("sample_data", [])
             }
             
             # Process columns
