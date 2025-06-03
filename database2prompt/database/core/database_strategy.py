@@ -33,5 +33,5 @@ class DatabaseStrategy(ABC):
         pass
 
     @abstractmethod
-    def get_table_sample(self, table: str, schema: str, limit: int = 5) -> List[Dict]:
+    def get_table_sample(self, table: str, schema: str, limit: int = 3) -> List[Dict]:
         pass

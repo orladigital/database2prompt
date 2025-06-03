@@ -69,7 +69,7 @@ class PostgreSQLStrategy(DatabaseStrategy):
             result = connection.execute(text(sql))
             connection.commit()
 
-    def get_table_sample(self, table: str, schema: str, limit: int = 5) -> List[Dict]:
+    def get_table_sample(self, table: str, schema: str, limit: int = 3) -> List[Dict]:
         query = f"""
             SELECT *
             FROM {schema}.{table}

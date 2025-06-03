@@ -6,7 +6,7 @@ class DatabaseJSONEncoder(json.JSONEncoder):
     Custom JSON encoder for database objects.
     """
     def default(self, obj: Any) -> Any:
-        # Para lidar com todos os possiveis tipos de dados diferentes vindos do sample_data
+        # Para lidar com todos os possíveis tipos de dados diferentes vindos do sample_data
         try:
             return str(obj)
         except Exception:
