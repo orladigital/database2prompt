@@ -3,6 +3,9 @@ from database2prompt.database.core.database_params import DatabaseParams
 from database2prompt.database.core.database_config import DatabaseConfig
 from database2prompt.database.processing.database_processor import DatabaseProcessor
 import json
+from database2prompt.json_generator.json_generator import DatabaseJSONEncoder
+
+
 
 def main():
 
@@ -40,7 +43,7 @@ def main():
     # Generate JSON
     json_content = database_processor.database_to_prompt(output_format="json")
     with open("summary-database.json", "w", encoding="utf-8") as file:
-        json.dump(json_content, file, indent=2, ensure_ascii=False)
+        json.dump(json_content, file, indent=2, ensure_ascii=False, cls=DatabaseJSONEncoder)
     print("JSON file generated: summary-database.json")
 
 if __name__ == "__main__":
