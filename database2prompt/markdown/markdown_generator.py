@@ -27,7 +27,12 @@ class MarkdownGenerator:
 
             for column_key in table_data["fields"].keys():
                 column_data = table_data["fields"][column_key]
-                md_content += f"    {column_key} {column_data["type"]} {column_data["default"]} {column_data["nullable"]},\n"
+                
+                column_type = column_data["type"]
+                default = column_data["default"] if column_data["default"] != None else ""
+                nullable = column_data["nullable"]
+                
+                md_content += f"    {column_key} {column_type} {default} {nullable},\n"
             md_content += ");\n"
             md_content += "```\n"
 
