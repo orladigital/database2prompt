@@ -42,7 +42,7 @@ class JsonGenerator:
             for column_name, column_info in table_info["fields"].items():
                 column_data = {
                     "name": column_name,
-                    "type": column_info["type"],
+                    "type": self.format_type(column_info["type"]),
                     "nullable": column_info["nullable"] == "NULL",
                     "default": column_info["default"]
                 }
@@ -60,3 +60,9 @@ class JsonGenerator:
             result["views"].append(view_data)
 
         return result 
+
+    def format_type(self, type: str) -> str:
+        if "varchar(None)" in type:
+            return "varchar"
+        
+        return type 
