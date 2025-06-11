@@ -28,7 +28,7 @@ class MarkdownGenerator:
             for column_key in table_data["fields"].keys():
                 column_data = table_data["fields"][column_key]
                 
-                column_type = column_data["type"]
+                column_type = self.format_type(column_data["type"])
                 default = column_data["default"] if column_data["default"] != None else ""
                 nullable = column_data["nullable"]
                 
@@ -71,4 +71,11 @@ class MarkdownGenerator:
             md_content += "```\n"
 
         return md_content
+
+    def format_type(self, type: str) -> str:
+        if "varchar(None)" in type:
+            return "varchar"
+        
+        return type 
+        
     
