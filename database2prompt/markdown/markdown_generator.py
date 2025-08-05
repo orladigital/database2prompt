@@ -25,7 +25,7 @@ class MarkdownGenerator:
             full_qualified_name = table_key if table_data["schema"] != None else table_data["name"]
             md_content += f"CREATE TABLE {full_qualified_name} (\n"
 
-            for column_key in table_data["fields"].keys():
+            for index, column_key in enumerate(table_data["fields"].keys()):
                 column_data = table_data["fields"][column_key]
                 
                 column_type = self.format_type(column_data["type"])

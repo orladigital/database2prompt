@@ -9,14 +9,7 @@ from database2prompt.json_generator.json_generator import DatabaseJSONEncoder
 
 def main():
 
-    config = DatabaseConfig(
-    host="localhost",
-    port=5432,
-    user="admin",
-    password="admin",
-    database="database_agent",
-    schema="public"
-    )
+    config = DatabaseConfig().from_env()
 
     strategy = DatabaseFactory.run("pgsql", config)
     next(strategy.connection())
