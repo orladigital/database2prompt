@@ -27,9 +27,12 @@ class MarkdownGenerator:
 
             for index, column_key in enumerate(table_data["fields"].keys()):
                 column_data = table_data["fields"][column_key]
-                md_content += f"    {column_key} {column_data["type"]} {column_data["default"]} {column_data["nullable"]}"
-                md_content += ",\n" if index + 1 < len(table_data["fields"].keys()) else "\n"
                 
+                column_type = self.format_type(column_data["type"])
+                default = column_data["default"] if column_data["default"] != None else ""
+                nullable = column_data["nullable"]
+                
+                md_content += f"    {column_key} {column_type} {default} {nullable},\n"
             md_content += ");\n"
             md_content += "```\n"
 
@@ -68,4 +71,11 @@ class MarkdownGenerator:
             md_content += "```\n"
 
         return md_content
+
+    def format_type(self, type: str) -> str:
+        if "varchar(None)" in type:
+            return "varchar"
+        
+        return type 
+        
     
