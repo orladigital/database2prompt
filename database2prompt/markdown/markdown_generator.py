@@ -25,9 +25,11 @@ class MarkdownGenerator:
             full_qualified_name = table_key if table_data["schema"] != None else table_data["name"]
             md_content += f"CREATE TABLE {full_qualified_name} (\n"
 
-            for column_key in table_data["fields"].keys():
+            for index, column_key in enumerate(table_data["fields"].keys()):
                 column_data = table_data["fields"][column_key]
-                md_content += f"    {column_key} {column_data["type"]} {column_data["default"]} {column_data["nullable"]},\n"
+                md_content += f"    {column_key} {column_data["type"]} {column_data["default"]} {column_data["nullable"]}"
+                md_content += ",\n" if index + 1 < len(table_data["fields"].keys()) else "\n"
+                
             md_content += ");\n"
             md_content += "```\n"
 
